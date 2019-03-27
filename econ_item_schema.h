@@ -34,6 +34,30 @@ public:
 	bool m_bActAsWeapon;//156
 };
 
+class CEconItemAttributeDefinition
+{
+public:
+	virtual bool BInitFromKV( KeyValues* kv, CUtlVector< CUtlString >* errorbuffer );
+private:
+	KeyValues* m_pKeyValues;
+public:
+	unsigned int m_uIndex;
+	const char* m_szName;
+	int m_iHidden;
+	int m_iForceOuputDescription;
+	int m_iStoredAsInteger;
+	bool m_bIsSetBonus;
+	bool m_bCanAffectMarketName;
+	bool m_bCanAffectRecipeComponentName;
+	int m_iIsUserGenerated;
+	int m_iEffectType;
+	int m_iDescriptionFormat;
+	const char* m_szDescriptionString;
+	const char* m_szArmoryDesc;
+	const char* m_szAttributeClass;
+	bool m_bInstanceData;
+};
+
 class CEconItemSchema{
 public:
 	CEconItemSchema() { SetDefLessFunc( m_ItemsDefs ); SetDefLessFunc( m_BaseItemsDefs ); SetDefLessFunc( m_Prefabs ); }
@@ -46,6 +70,7 @@ private:
 	virtual bool BInitSchema( KeyValues* schema, CUtlVector< CUtlString >*  errorbuffer );
 	virtual bool BPostSchemaInit( CUtlVector< CUtlString >*  errorbuffer );
 	virtual bool BInitPrefabs( KeyValues* prefabs, CUtlVector< CUtlString >* errorbuffer );
+	virtual bool BInitAttributes( KeyValues* attributes, CUtlVector< CUtlString >* errorbuffer );
 	virtual bool BInitItems( KeyValues* items, CUtlVector< CUtlString >* errorbuffer );
 	virtual bool BInitGameInfo( KeyValues* game_info, CUtlVector< CUtlString >* errorbuffer );
 	virtual CEconItemDefinition* CreateEconItemDefinition() { return new CEconItemDefinition; }
@@ -55,6 +80,7 @@ private:
 	KeyValues* m_pSchemaKV;
 	CUtlMap<const char*, KeyValues*, int> m_Prefabs;
 	CUtlMap<int, CEconItemDefinition*, int> m_BaseItemsDefs;
+	CUtlMap<int, CEconItemAttributeDefinition*, int> m_Attributes;
 	CUtlMap<int, CEconItemDefinition*, int> m_ItemsDefs;
 };
 

@@ -10,5 +10,5 @@ class CEconWearable : public CBaseAnimating
 public:
 	DECLARE_CLASS( CEconWearable, CBaseAnimating );
 	DECLARE_NETWORKCLASS();
-}
+};
 #endif

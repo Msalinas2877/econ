@@ -7,16 +7,16 @@ IMPLEMENT_NETWORKCLASS_ALIASED( EconEntity, DT_EconEntity );
 
 BEGIN_NETWORK_TABLE( CEconEntity, DT_EconEntity )
 #ifdef CLIENT_DLL
-	RecvPropDataTable( RECVINFO_DT( m_Item ), 0, &REFERENCE_RECV_TABLE( DT_ScriptCreatedItem ) )
+	RecvPropDataTable( RECVINFO_DT( m_AttributeManager ), 0, &REFERENCE_RECV_TABLE( DT_AttributeContainer ) )
 #else
-	SendPropDataTable( SENDINFO_DT( m_Item ), &REFERENCE_SEND_TABLE( DT_ScriptCreatedItem ) )
+	SendPropDataTable( SENDINFO_DT( m_AttributeManager ), &REFERENCE_SEND_TABLE( DT_AttributeContainer ) )
 #endif
 END_NETWORK_TABLE();
 
 #ifdef CLIENT_DLL
 void CEconEntity::UpdateAttachmentModels()
 {
-	if ( m_Item.GetStaticData()->m_bAttachToHands || m_Item.GetStaticData()->m_bAttachToHandsVmOnly )
+	if ( m_AttributeManager.m_Item.GetStaticData()->m_bAttachToHands || m_AttributeManager.m_Item.GetStaticData()->m_bAttachToHandsVmOnly )
 	{
 		if ( AttachmentModelsShouldBeVisible() )
 		{
@@ -31,7 +31,7 @@ void CEconEntity::UpdateAttachmentModels()
 	
 				C_ViewmodelAttachmentModel *pAttachment = new C_ViewmodelAttachmentModel;
 				pAttachment->SetOwnerEntity( this );
-				if ( pAttachment->InitializeAsClientEntity( m_Item.GetPlayerDisplayModel(), RENDER_GROUP_VIEW_MODEL_OPAQUE ) == false )
+				if ( pAttachment->InitializeAsClientEntity( m_AttributeManager.m_Item.GetPlayerDisplayModel(), RENDER_GROUP_VIEW_MODEL_OPAQUE ) == false )
 				{
 					pAttachment->Remove();
 					return;

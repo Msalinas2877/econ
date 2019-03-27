@@ -41,7 +41,7 @@ bool CEconItemDefinition::BInitFromKV( KeyValues* kv, CUtlVector< CUtlString >* 
 	MergeDefinitionPrefab( m_pKeyValues, kv );
 	m_bEnabled = m_pKeyValues->GetBool( "enabled" );
 	m_szName = m_pKeyValues->GetString( "name" );
-	m_uIndex = atoi( m_pKeyValues->GetName() );
+	m_uIndex = V_atoi( m_pKeyValues->GetName() );
 	m_szItemClass = m_pKeyValues->GetString( "item_class" );
 	m_szItemName = m_pKeyValues->GetString( "item_name" );
 	m_szItemTypeName = m_pKeyValues->GetString( "item_type_name" );
@@ -54,6 +54,18 @@ bool CEconItemDefinition::BInitFromKV( KeyValues* kv, CUtlVector< CUtlString >* 
 	m_bFlipViewmodel = m_pKeyValues->GetBool( "flip_viewmodel" );
 	m_bActAsWearable = m_pKeyValues->GetBool( "act_as_wearable" );
 	m_bActAsWeapon = m_pKeyValues->GetBool( "act_as_weapon" );
+	return true;
+}
+
+bool CEconItemAttributeDefinition::BInitFromKV( KeyValues * kv, CUtlVector<CUtlString>* errorbuffer )
+{
+	m_pKeyValues = kv->MakeCopy();
+	const char* name = m_pKeyValues->GetName();
+	m_uIndex = V_atoi( name );
+	m_szName = m_pKeyValues->GetString( "name", "(unnamed)" );
+	m_iHidden = m_pKeyValues->GetInt( "hidden" );
+	m_iForceOuputDescription = m_pKeyValues->GetInt( "force_output_description" );
+	m_iStoredAsInteger = m_pKeyValues->GetInt( "hidden" );
 	return true;
 }
 
@@ -96,7 +108,7 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlStrin
 	return false;
 }
 
-#define ParseSchemaItemWithoutError(name, function)	\
+#define ParseSchemaSectionWithoutError(name, function)	\
 		KeyValues* key##name = schema->FindKey(#name);	\
 		if( key##name )	\
 		{	\
@@ -107,7 +119,7 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlStrin
 			return false;	\
 		}	\
 
-#define ParseSchemaItem(name, function)	\
+#define ParseSchemaSection(name, function)	\
 		KeyValues* key##name = schema->FindKey(#name);	\
 		if( key##name )	\
 		{	\
@@ -120,8 +132,9 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlStrin
 	
 bool CEconItemSchema::BInitSchema( KeyValues* schema, CUtlVector< CUtlString >*  errorbuffer )
 {
-	ParseSchemaItemWithoutError( prefabs, BInitPrefabs );
-	ParseSchemaItem( items, BInitItems );
+	ParseSchemaSectionWithoutError( prefabs, BInitPrefabs );
+	ParseSchemaSection( attributes, BInitAttributes );
+	ParseSchemaSection( items, BInitItems );
 	return true;
 }
 
@@ -144,6 +157,27 @@ bool CEconItemSchema::BInitPrefabs( KeyValues* prefabs, CUtlVector< CUtlString >
 	return true;
 }
 
+bool CEconItemSchema::BInitAttributes( KeyValues* attributes, CUtlVector< CUtlString >* errorbuffer )
+{
+	FOR_EACH_TRUE_SUBKEY( attributes, attribute )
+	{
+		const char* name = attribute->GetName();
+		int uIndex = V_atoi( name );
+		if  ( m_Attributes.Find( uIndex ) != m_Attributes.InvalidIndex() )
+		{
+			SchemaErrorFormat( "Duplicate attribute definition index (%d). \n", uIndex );
+		}
+		if ( uIndex < 0 )
+		{
+			SchemaErrorFormat( "Attribute definition index %d must be greater than or equal to zero", uIndex );
+		}
+		m_Attributes.Insert( uIndex );
+		if ( m_Attributes[uIndex]->BInitFromKV( attribute, errorbuffer ) )
+			return NULL;
+	}
+	return true;
+}
+
 bool CEconItemSchema::BInitItems( KeyValues* items, CUtlVector< CUtlString >* errorbuffer )
 {
 	FOR_EACH_TRUE_SUBKEY( items, item )
@@ -151,7 +185,7 @@ bool CEconItemSchema::BInitItems( KeyValues* items, CUtlVector< CUtlString >* er
 		const char* name = item->GetName();
 		if ( Q_stricmp( name, "default") != 0 )
 		{
-			int uIndex = atoi( name );
+			int uIndex = V_atoi( name );
 			if ( m_ItemsDefs.Find( uIndex ) != m_ItemsDefs.InvalidIndex() )
 			{
 				SchemaErrorFormat( "Duplicate item definition (%d)", uIndex );

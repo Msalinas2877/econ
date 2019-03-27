@@ -17,7 +17,7 @@ public:
 	CEconItemView& operator=(const CEconItemView *itemcopy) { m_iItemDefinitionIndex = itemcopy->m_iItemDefinitionIndex; m_iItemDefinitionIndex = itemcopy->m_iAccountID; return *this; }
 	void Init( int definitionindex, int minlevel = 0, int maxlevel = 0, uint32 accountid = 0 );
 
-	const char* GetPlayerDisplayModel()	{ return GetStaticData()->m_szModelPlayer; }
+	const char* GetPlayerDisplayModel() const { return GetStaticData()->m_szModelPlayer; }
 	const char* GetWorldDisplayModel() const { return GetStaticData()->m_szModelWorld; }
 
 	CEconItemDefinition* GetStaticData() const { return GetItemSchema()->GetItemDefinition( m_iItemDefinitionIndex ); }

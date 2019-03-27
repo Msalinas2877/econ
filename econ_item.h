@@ -9,14 +9,6 @@ struct wearableanimplayback_t
 	int iStub;
 };
 
-class CAttributeList
-{
-public:
-//	DECLARE_PREDICTABLE();
-	DECLARE_CLASS_NOBASE( CAttributeList );
-	DECLARE_EMBEDDED_NETWORKVAR();
-};
-
 // To Do: Add more types
 enum SharedObjectType
 {
