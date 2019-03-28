@@ -5,8 +5,19 @@
 #endif
 #include "igamesystem.h"
 #include "steam/steamclientpublic.h"
-#include "econ_item.h"
 #include "UtlSortVector.h"
+
+#include "econ_item.h"
+#include "econ_item_view.h"
+
+class ItemViewLess
+{
+public:
+	bool Less( const CEconItemView *item0, const CEconItemView *item1, void * )
+	{
+		return item0->GetID() < item1->GetID();
+	}
+};
 
 class CPlayerInventory : public GCSDK::ISharedObjectListener
 {
@@ -28,7 +39,7 @@ public:
 
 private:
 	CSteamID m_SteamID;
-	CUtlSortVector<CEconItemView *> m_Items;
+	CUtlSortVector<CEconItemView *, ItemViewLess> m_Items;
 };
 
 //This seems to containt one extra virtual pure function

@@ -23,7 +23,7 @@ public:
 	CEconItemDefinition* GetStaticData() const { return GetItemSchema()->GetItemDefinition( m_iItemDefinitionIndex ); }
 
 	virtual CEconItemDefinition* GetItemDefinition() { return GetStaticData(); }
-	virtual int GetID()	{ return m_iItemDefinitionIndex; }
+	virtual int GetID()	const { return m_iItemDefinitionIndex; }
 	virtual uint32 GetAccountID()	{ return m_iAccountID; }
 private:
 	CNetworkVar( uint, m_iItemDefinitionIndex );

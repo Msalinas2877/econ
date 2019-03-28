@@ -67,7 +67,7 @@ public:
 	const CUtlMap<int, CEconItemDefinition*, int> &GetBaseItemDefinitions()  { return m_BaseItemsDefs; }
 private:
 	virtual bool BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlString >*  errorbuffer );
-	virtual bool BInitSchema( KeyValues* schema, CUtlVector< CUtlString >*  errorbuffer );
+	virtual bool BInitSchema( KeyValues* pschema, CUtlVector< CUtlString >*  errorbuffer );
 	virtual bool BPostSchemaInit( CUtlVector< CUtlString >*  errorbuffer );
 	virtual bool BInitPrefabs( KeyValues* prefabs, CUtlVector< CUtlString >* errorbuffer );
 	virtual bool BInitAttributes( KeyValues* attributes, CUtlVector< CUtlString >* errorbuffer );

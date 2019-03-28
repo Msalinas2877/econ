@@ -7,11 +7,7 @@ CEconItemSytem* ItemSystem()
 	if ( !pSystem )
 	{
 		pSystem = new CEconItemSytem();
-#ifdef TF_EP
-		pSystem->m_pItemSchema = new CTFItemSchema(); 
-#else
 		pSystem->m_pItemSchema = new CEconItemSchema(); 
-#endif
 	}
 	return pSystem;
 }

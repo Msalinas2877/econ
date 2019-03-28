@@ -32,7 +32,7 @@ void MergeDefinitionPrefab( KeyValues* kv1, KeyValues* kv2 )
 				return MergeDefinitionPrefab( kv1, pPrefabKv );
 		}
 	}
-	kv1->RecursiveMergeKeyValues( kv2 );
+	kv1->MergeFrom( kv2 );
 }
 
 bool CEconItemDefinition::BInitFromKV( KeyValues* kv, CUtlVector< CUtlString >* errorbuffer )
@@ -109,7 +109,7 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlStrin
 }
 
 #define ParseSchemaSectionWithoutError(name, function)	\
-		KeyValues* key##name = schema->FindKey(#name);	\
+		KeyValues* key##name = pschema->FindKey(#name);	\
 		if( key##name )	\
 		{	\
 			function(key##name, errorbuffer);	\
@@ -120,7 +120,7 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlStrin
 		}	\
 
 #define ParseSchemaSection(name, function)	\
-		KeyValues* key##name = schema->FindKey(#name);	\
+		KeyValues* key##name = pschema->FindKey(#name);	\
 		if( key##name )	\
 		{	\
 			function(key##name, errorbuffer);	\
@@ -130,7 +130,7 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlStrin
 			SchemaError("Required key \""###name##"\" missing. \n")	\
 		}	\
 	
-bool CEconItemSchema::BInitSchema( KeyValues* schema, CUtlVector< CUtlString >*  errorbuffer )
+bool CEconItemSchema::BInitSchema( KeyValues* pschema, CUtlVector< CUtlString >*  errorbuffer )
 {
 	ParseSchemaSectionWithoutError( prefabs, BInitPrefabs );
 	ParseSchemaSection( attributes, BInitAttributes );

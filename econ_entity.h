@@ -43,7 +43,26 @@ public:
 
 	CNetworkVarEmbedded( CAttributeContainer, m_AttributeManager );
 private:
+#ifdef CLIENT_DLL
 	CHandle<C_ViewmodelAttachmentModel> m_pAttachment;
+#endif
 
 };
+
+#ifdef CLIENT_DLL
+class C_ViewmodelAttachmentModel : public CBaseAnimating
+{
+public:
+	DECLARE_CLASS( C_ViewmodelAttachmentModel, CBaseAnimating )
+	virtual bool InitializeAsClientEntity( const char *pszModelName, bool bRenderWithViewModels );
+	virtual int	InternalDrawModel( int flags, const RenderableInstance_t &instance );
+	virtual bool OnPostInternalDrawModel( ClientModelRenderInfo_t *pInfo );
+	virtual void StandardBlendingRules( CStudioHdr *pStudioHdr, Vector pos[], QuaternionAligned q[], float currentTime, int boneMask );
+	virtual void FormatViewModelAttachment( int nAttachment, matrix3x4_t &attachmentToWorld );
+	virtual int GetSkin( void );
+	virtual RenderGroup_t GetRenderGroup() { return RENDER_GROUP_OPAQUE; }
+
+};
+#endif
+
 #endif
