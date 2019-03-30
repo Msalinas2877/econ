@@ -80,6 +80,7 @@ bool CEconItemSchema::BInit( const char* file, const char* path, CUtlVector< CUt
 		BInitTextBuffer( buffer, errorbuffer );
 		return true;
 	}
+	SchemaErrorFormat( "Cannot load file '%s'", file );
 	return false;
 }
 
