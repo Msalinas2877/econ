@@ -6,6 +6,7 @@
 #include "igamesystem.h"
 #include "steam/steamclientpublic.h"
 #include "econ_item.h"
+#include "econ_item_view.h"
 #include "UtlSortVector.h"
 
 class CPlayerInventory : public GCSDK::ISharedObjectListener

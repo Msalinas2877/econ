@@ -1,0 +1,33 @@
+$Project
+{
+	$Folder	"Source Files"
+	{	
+		$Folder	"Econ"
+		{
+			$File	"$SRCDIR\game\shared\econ\attribute_manager.cpp"
+			$File	"$SRCDIR\game\shared\econ\attribute_manager.h"
+			$File	"$SRCDIR\game\shared\econ\econ_entity.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_entity.h"
+			$File	"$SRCDIR\game\shared\econ\econ_holidays.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_holidays.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item_constants.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item_constants.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item_inventory.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item_inventory.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item_schema.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item_schema.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item_system.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item_system.h"
+			$File	"$SRCDIR\game\shared\econ\econ_item_view.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_item_view.h"
+			$File	"$SRCDIR\game\shared\econ\econ_wearable.cpp"
+			$File	"$SRCDIR\game\shared\econ\econ_wearable.h"
+			$File	"$SRCDIR\game\shared\econ\game_item_schema.cpp"
+			$File	"$SRCDIR\game\shared\econ\game_item_schema.h"
+			$File	"$SRCDIR\game\shared\econ\ihasattributes.h"
+			$File	"$SRCDIR\game\shared\econ\ihasowner.h"
+		}
+	}
+}

@@ -1,7 +1,9 @@
 #include "cbase.h"
 #include "econ_entity.h"
-#include "tf_shareddefs.h"
-#include "tf_viewmodel.h"
+
+#ifdef CLIENT_DLL
+void FormatViewModelAttachment( Vector &vOrigin, bool bInverse );
+#endif
 
 IMPLEMENT_NETWORKCLASS_ALIASED( EconEntity, DT_EconEntity );
 
@@ -66,4 +68,53 @@ void CEconEntity::OnDataChanged( DataUpdateType_t updateType )
 	BaseClass::OnDataChanged( updateType );
 	return UpdateAttachmentModels();
 };
+
+
+bool C_ViewmodelAttachmentModel::InitializeAsClientEntity( const char *pszModelName, RenderGroup_t renderGroup )
+{
+	if ( BaseClass::InitializeAsClientEntity( pszModelName, renderGroup ) )
+	{
+		AddEffects( EF_BONEMERGE );
+		AddEffects( EF_BONEMERGE_FASTCULL );
+		AddEffects( EF_NODRAW );
+		return true;
+	}
+	return false;
+}
+
+int C_ViewmodelAttachmentModel::InternalDrawModel( int flags )
+{
+	CMatRenderContextPtr pRenderContext( materials );
+	if ( ((CBaseViewModel *)GetOwnerEntity())->ShouldFlipViewModel() )
+		pRenderContext->CullMode( MATERIAL_CULLMODE_CW );
+
+	int ret = BaseClass::InternalDrawModel( flags );
+
+	pRenderContext->CullMode( MATERIAL_CULLMODE_CCW );
+
+	return ret;
+}
+
+bool C_ViewmodelAttachmentModel::OnPostInternalDrawModel( ClientModelRenderInfo_t *pInfo )
+{
+	return BaseClass::OnPostInternalDrawModel( pInfo );
+}
+
+void C_ViewmodelAttachmentModel::StandardBlendingRules( CStudioHdr *pStudioHdr, Vector pos[], QuaternionAligned q[], float currentTime, int boneMask )
+{
+	BaseClass::StandardBlendingRules( pStudioHdr, pos, q, currentTime, boneMask );
+}
+
+void C_ViewmodelAttachmentModel::FormatViewModelAttachment( int nAttachment, matrix3x4_t &attachmentToWorld )
+{
+	Vector vecOrigin;
+	MatrixPosition( attachmentToWorld, vecOrigin );
+	::FormatViewModelAttachment( vecOrigin, false );
+	PositionMatrix( vecOrigin, attachmentToWorld );
+}
+
+int C_ViewmodelAttachmentModel::GetSkin( void )
+{
+	return BaseClass::GetSkin();
+}
 #endif

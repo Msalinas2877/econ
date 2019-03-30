@@ -1,7 +1,6 @@
 #include "cbase.h"
 #include "econ_item_inventory.h"
 #include "econ_item.h"
-#include "tf_gc_manager.h"
 
 void IInventoryUpdateListener::SOCreated( const CSteamID & SteamID, GCSDK::CSharedObject const * SO, GCSDK::ESOCacheEvent SOCacheEvent )
 {
@@ -137,12 +136,10 @@ void CPlayerInventory::RequestInventory( CSteamID SteamID )
 		SOClear();
 
 	m_SteamID = SteamID;
-	GCManager()->AddSOCacheListener( SteamID, this );
 }
 
 void CPlayerInventory::AddListener( GCSDK::ISharedObjectListener * pListener )
 {
-	GCManager()->AddSOCacheListener( m_SteamID, pListener );
 }
 
 bool CPlayerInventory::AddEconItem( CEconItem * pEconItem, bool a, bool b, bool c )

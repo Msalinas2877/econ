@@ -4,13 +4,15 @@
 #pragma once
 #endif
 
+#include "econ_item_view.h"
+
 // CAttribute_String is defined on protobufs
 // if you have protobufs included please define PBAttributeString and change the include path
 #ifdef PBAttributeString
 #include "generated_proto/tf_gcmessages.pb.h"
 #else
 class CAttribute_String;
-#warning You need protobuf messages to use CAttribute_String
+#pragma message ( "You need protobuf messages to use CAttribute_String" )
 #endif
 
 #define CALL_ATTRIB_HOOK_INT( value, attribute ) \
@@ -33,8 +35,10 @@ class CAttribute_String;
 
 #ifdef CLIENT_DLL
 EXTERN_RECV_TABLE( DT_AttributeManager )
+EXTERN_RECV_TABLE( DT_AttributeContainer )
 #else
 EXTERN_SEND_TABLE( DT_AttributeManager )
+EXTERN_SEND_TABLE( DT_AttributeContainer )
 #endif
 
 class CAttributeManager
@@ -56,7 +60,11 @@ public:
 
 class CAttributeContainer : public CAttributeManager
 {
+public:
+	DECLARE_CLASS( CAttributeContainer, CAttributeManager );
+	DECLARE_EMBEDDED_NETWORKVAR();
 
+	CNetworkVarEmbedded( CEconItemView, m_Item );
 };
 
 class CAttributeList
