@@ -77,8 +77,7 @@ bool CEconItemSchema::BInit( const char* file, const char* path, CUtlVector< CUt
 	CUtlBuffer buffer(0, 0, CUtlBuffer::READ_ONLY | CUtlBuffer::TEXT_BUFFER);
 	if ( g_pFullFileSystem->ReadFile( file, path, buffer ) )
 	{
-		BInitTextBuffer( buffer, errorbuffer );
-		return true;
+		return BInitTextBuffer( buffer, errorbuffer );
 	}
 	SchemaErrorFormat( "Cannot load file '%s'", file );
 	return false;
@@ -103,7 +102,7 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlStrin
 	{
 		if ( BInitSchema( m_pSchemaKV, errorbuffer ) )
 		{
-			return BPostSchemaInit(errorbuffer);
+			return BPostSchemaInit( errorbuffer );
 		}
 	}
 	return false;
@@ -115,10 +114,6 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlStrin
 		{	\
 			function(key##name, errorbuffer);	\
 		}	\
-		else	\
-		{	\
-			return false;	\
-		}	\
 
 #define ParseSchemaSection(name, function)	\
 		KeyValues* key##name = schema->FindKey(#name);	\
@@ -129,6 +124,7 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlStrin
 		else	\
 		{	\
 			SchemaError("Required key \""###name##"\" missing. \n")	\
+			return false; \
 		}	\
 	
 bool CEconItemSchema::BInitSchema( KeyValues* schema, CUtlVector< CUtlString >*  errorbuffer )

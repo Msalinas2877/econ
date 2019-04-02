@@ -12,6 +12,12 @@ SendPropDataTable( SENDINFO_DT( m_Item ), &REFERENCE_SEND_TABLE( DT_ScriptCreate
 #endif
 END_NETWORK_TABLE();
 
+BEGIN_NETWORK_TABLE_NOBASE( CAttributeList, DT_AttributeList )
+END_NETWORK_TABLE();
+
+BEGIN_DATADESC_NO_BASE( CAttributeList )
+END_DATADESC()
+
 void CAttributeManager::StopProvidingTo( CBaseEntity * pEntity )
 {
 }

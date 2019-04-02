@@ -54,8 +54,6 @@ public:
 	}
 
 	void StopProvidingTo( CBaseEntity* pEntity );
-
-	CNetworkVarEmbedded( CEconItemView, m_Item );
 };
 
 class CAttributeContainer : public CAttributeManager
@@ -69,7 +67,10 @@ public:
 
 class CAttributeList
 {
-
+public:
+	DECLARE_CLASS_NOBASE( CAttributeList );
+	DECLARE_EMBEDDED_NETWORKVAR();
+	DECLARE_DATADESC();
 };
 
 #endif // ATTRIBUTE_MANAGER_H

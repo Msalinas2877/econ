@@ -4,11 +4,6 @@
 #pragma once
 #endif
 
-struct wearableanimplayback_t
-{
-	int iStub;
-};
-
 // To Do: Add more types
 enum SharedObjectType
 {

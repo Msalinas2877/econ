@@ -62,17 +62,18 @@ class CEconItemSchema{
 public:
 	CEconItemSchema() { SetDefLessFunc( m_ItemsDefs ); SetDefLessFunc( m_BaseItemsDefs ); SetDefLessFunc( m_Prefabs ); }
 	virtual bool BInit( const char* file, const char* path, CUtlVector< CUtlString >*  errorbuffer );
+	bool BInitFromDelayedBuffer() { return false; };
 	virtual KeyValues* FindDefitionPrefab( const char* name );
-	virtual CEconItemDefinition* GetItemDefinition( int index );
+	CEconItemDefinition* GetItemDefinition( int index );
 	const CUtlMap<int, CEconItemDefinition*, int> &GetBaseItemDefinitions()  { return m_BaseItemsDefs; }
 private:
-	virtual bool BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlString >*  errorbuffer );
+	bool BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlString >*  errorbuffer );
 	virtual bool BInitSchema( KeyValues* schema, CUtlVector< CUtlString >*  errorbuffer );
 	virtual bool BPostSchemaInit( CUtlVector< CUtlString >*  errorbuffer );
-	virtual bool BInitPrefabs( KeyValues* prefabs, CUtlVector< CUtlString >* errorbuffer );
-	virtual bool BInitAttributes( KeyValues* attributes, CUtlVector< CUtlString >* errorbuffer );
-	virtual bool BInitItems( KeyValues* items, CUtlVector< CUtlString >* errorbuffer );
-	virtual bool BInitGameInfo( KeyValues* game_info, CUtlVector< CUtlString >* errorbuffer );
+	bool BInitPrefabs( KeyValues* prefabs, CUtlVector< CUtlString >* errorbuffer );
+	bool BInitAttributes( KeyValues* attributes, CUtlVector< CUtlString >* errorbuffer );
+	bool BInitItems( KeyValues* items, CUtlVector< CUtlString >* errorbuffer );
+	bool BInitGameInfo( KeyValues* game_info, CUtlVector< CUtlString >* errorbuffer );
 	virtual CEconItemDefinition* CreateEconItemDefinition() { return new CEconItemDefinition; }
 
 	CEconItemDefinition* m_pDefaultItemDef = nullptr;

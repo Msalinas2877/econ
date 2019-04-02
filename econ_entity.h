@@ -8,6 +8,7 @@
 #include "econ_item.h"
 #include "econ_item_system.h"
 #include "econ_item_view.h"
+#include "econ_wearable.h"
 #include "attribute_manager.h"
 #include "ihasattributes.h"
 
@@ -31,8 +32,12 @@ public:
 	virtual int TranslateViewmodelHandActivityInternal( int iActivity ) { return iActivity; }
 	virtual void PlayAnimForPlaybackEvent( wearableanimplayback_t iPlayback ) {};
 #ifdef CLIENT_DLL
-	virtual void			OnDataChanged( DataUpdateType_t updateType );
-	virtual bool WantsToOverrideViewmodelAttachments()	{ return false; }
+	virtual void	OnDataChanged( DataUpdateType_t updateType );
+	virtual bool	ViewModel_IsTransparent( void ) { return IsTransparent(); }
+	virtual bool	ViewModel_IsUsingFBTexture( void ) { return UsesPowerOfTwoFrameBufferTexture(); }
+	virtual bool	IsOverridingViewmodel( void ) { return false; };
+	virtual int	DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags ) { return 0; };
+	virtual bool	WantsToOverrideViewmodelAttachments()	{ return false; }
 	virtual bool	OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options ) { return false; }
 #endif
 	virtual CAttributeManager	*GetAttributeManager( void ) { return &m_AttributeManager; }
