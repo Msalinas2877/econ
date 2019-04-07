@@ -18,7 +18,7 @@ END_NETWORK_TABLE();
 #ifdef CLIENT_DLL
 void CEconEntity::UpdateAttachmentModels()
 {
-	if ( m_AttributeManager.m_Item.GetStaticData()->m_bAttachToHands || m_AttributeManager.m_Item.GetStaticData()->m_bAttachToHandsVmOnly )
+	if ( m_AttributeManager.m_Item.GetStaticData() && ( m_AttributeManager.m_Item.GetStaticData()->m_bAttachToHands || m_AttributeManager.m_Item.GetStaticData()->m_bAttachToHandsVmOnly ) )
 	{
 		if ( AttachmentModelsShouldBeVisible() )
 		{

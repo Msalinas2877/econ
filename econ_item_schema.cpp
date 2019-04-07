@@ -86,13 +86,17 @@ bool CEconItemSchema::BInit( const char* file, const char* path, CUtlVector< CUt
 CEconItemDefinition* CEconItemSchema::GetItemDefinition( int index )
 {
 	int i = m_ItemsDefs.Find( index );
-	return m_ItemsDefs.Element( i );
+	if( i != m_ItemsDefs.InvalidIndex() )
+		return m_ItemsDefs.Element( i );
+	return NULL;
 }
 
 KeyValues* CEconItemSchema::FindDefitionPrefab( const char* name )
 {
 	int i = m_Prefabs.Find( name );
-	return m_Prefabs.Element(i);
+	if( i != m_Prefabs.InvalidIndex() )
+		return m_Prefabs.Element( i );
+	return NULL;
 }
 
 bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector< CUtlString >*  errorbuffer )

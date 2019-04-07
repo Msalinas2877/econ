@@ -24,6 +24,11 @@ BEGIN_NETWORK_TABLE_NOBASE( CEconItemView, DT_ScriptCreatedItem )
 #endif
 END_NETWORK_TABLE()
 
+CEconItemView::CEconItemView()
+{
+	m_iItemDefinitionIndex = -1;
+}
+
 void CEconItemView::Init( int definitionindex, int minlevel, int maxlevel, uint32 accountid )
 {
 	m_iItemDefinitionIndex = definitionindex;

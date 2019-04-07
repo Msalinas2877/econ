@@ -1,6 +1,10 @@
 #ifndef ECON_ITEM_VIEW_H
 #define ECON_ITEM_VIEW_H
 
+#ifdef _WIN32
+#pragma once
+#endif
+
 #include "econ_item_system.h"
 
 #ifdef CLIENT_DLL
@@ -14,6 +18,8 @@ class CEconItemView
 public:
 	DECLARE_CLASS_NOBASE( CEconItemView );
 	DECLARE_EMBEDDED_NETWORKVAR();
+
+	CEconItemView();
 	CEconItemView& operator=(const CEconItemView *itemcopy) { m_iItemDefinitionIndex = itemcopy->m_iItemDefinitionIndex; m_iItemDefinitionIndex = itemcopy->m_iAccountID; return *this; }
 	void Init( int definitionindex, int minlevel = 0, int maxlevel = 0, uint32 accountid = 0 );
 

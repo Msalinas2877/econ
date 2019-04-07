@@ -3,7 +3,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	"$BASE;.\;$SRCDIR\game\shared\econ"
-		$PreprocessorDefinitions		"$BASE;USES_ECON_ITEMS"
+		$PreprocessorDefinitions		"$BASE"
 	}
 }
 
